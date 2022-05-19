@@ -41,6 +41,12 @@ public class MyClient extends IServer{
 
     public void start(){
 
+        sourceMark = HubServer.HubMessage.MsgSource.client;
+
+        HubServer.HubMessage lineConnectMsg = new HubServer.HubMessage();
+        lineConnectMsg.type = lineConnect;
+        putMessage(lineConnectMsg);
+        initMessageWorker();
 
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();
@@ -74,7 +80,7 @@ public class MyClient extends IServer{
                         }
                     });
             ChannelFuture future = bootstrap.bind(Constant.myClientPort);
-            log.info("socks5 netty server has started on port {}", Constant.myClientPort);
+            log.info("Socks5 Client has started on port {}", Constant.myClientPort);
             future.channel().closeFuture().sync();
         }catch (Exception e){
             log.info(e.toString());
@@ -91,20 +97,20 @@ public class MyClient extends IServer{
 
 
 
-    public static void main(String[] args){
-
-        MyClient myClient = new MyClient();
-        myClient.sourceMark = HubServer.HubMessage.MsgSource.client;
-     //   myClient.initLineControllChannel(new LineControllInboundHandler(myClient));
-
-        HubServer.HubMessage lineConnectMsg = new HubServer.HubMessage();
-        lineConnectMsg.type = lineConnect;
-        myClient.putMessage(lineConnectMsg);
-
-        myClient.initMessageWorker();
-        myClient.start();
-
-    }
+//    public void start(){
+//
+//        MyClient myClient = new MyClient();
+//        myClient.sourceMark = HubServer.HubMessage.MsgSource.client;
+//     //   myClient.initLineControllChannel(new LineControllInboundHandler(myClient));
+//
+//        HubServer.HubMessage lineConnectMsg = new HubServer.HubMessage();
+//        lineConnectMsg.type = lineConnect;
+//        myClient.putMessage(lineConnectMsg);
+//
+//        myClient.initMessageWorker();
+//        myClient.start();
+//
+//    }
 
 
 

@@ -94,7 +94,8 @@
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <!--<mainClass>com.kdyzm.socks5.netty.server.HubServer</mainClass>-->
                                     <!--<mainClass>com.kdyzm.socks5.netty.server.MyClient</mainClass>-->
-                                    <mainClass>com.kdyzm.socks5.netty.server.InterClient</mainClass>
+                                    <!--<mainClass>com.kdyzm.socks5.netty.server.InterClient</mainClass>-->
+                                    <mainClass>com.kdyzm.socks5.netty.Main</mainClass>
 
                                 </transformer>
                             </transformers>

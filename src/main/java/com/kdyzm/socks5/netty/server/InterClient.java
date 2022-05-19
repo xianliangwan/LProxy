@@ -37,9 +37,10 @@ public class InterClient extends IServer{
 
 
     public static EventLoopGroup eventExecutors = new NioEventLoopGroup();
-    public static void main(String[] args) throws InterruptedException {
+    public void start(String ip,int port){
 
-
+        Constant.hubHost = ip;
+        Constant.hubPort = port;
         InterClient interClient = new InterClient();
 
         HubServer.HubMessage lineConnectMsg = new HubServer.HubMessage();

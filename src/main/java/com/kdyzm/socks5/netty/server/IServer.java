@@ -21,6 +21,7 @@ public class IServer implements IServerContext {
 
     public static Channel lineControlChannelClient = null;
     public static Channel lineControlChannelLocal = null;
+    public static Channel lineControlChannel = null;
 
     public HubServer.HubMessage.MsgSource sourceMark;
 
@@ -47,17 +48,17 @@ public class IServer implements IServerContext {
                                 } else if (sourceMark == HubServer.HubMessage.MsgSource.client) {
                                     initLineControllChannel(new LineControllInboundHandler(IServer.this));
                                 }
-                            } else if (null != lineControlChannelLocal && lineControlChannelLocal.isActive()) {
-                                lineControlChannelLocal.writeAndFlush(hubMessage);
+                            } else if (null != lineControlChannel && lineControlChannel.isActive()) {
+                                lineControlChannel.writeAndFlush(hubMessage);
                                 log.info("hubMsg发送成功");
-                            } else if (null != lineControlChannelLocal && !lineControlChannelLocal.isActive()) {
+                            } else if (null != lineControlChannel && !lineControlChannel.isActive()) {
                                 HubServer.HubMessage lineConnectMsg = new HubServer.HubMessage();
                                 lineConnectMsg.type = HubServer.HubMessage.MsgType.lineConnect;
                                 putMessage(lineConnectMsg);
                             }
                         } else if ((System.currentTimeMillis() - time) > 1000 * 10) {
 
-                            if (null == lineControlChannelLocal || !lineControlChannelLocal.isActive()) {
+                            if (null == lineControlChannel || !lineControlChannel.isActive()) {
 
                                 HubServer.HubMessage lineConnectMsg = new HubServer.HubMessage();
                                 lineConnectMsg.type = HubServer.HubMessage.MsgType.lineConnect;
@@ -130,7 +131,7 @@ public class IServer implements IServerContext {
                         public void operationComplete(ChannelFuture future) throws Exception {
                             if (future.isSuccess()) {
                                 log.debug("Hub服务器连接成功");
-                                lineControlChannelLocal = future.channel();
+                                lineControlChannel = future.channel();
 
                                 sendHearBeat(sourceMark);
 

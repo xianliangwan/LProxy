@@ -63,7 +63,7 @@ public class HubServer extends IServer{
     }
 
 
-    public static void main(String[] args) throws InterruptedException {
+    public void start() throws InterruptedException {
 
 
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);

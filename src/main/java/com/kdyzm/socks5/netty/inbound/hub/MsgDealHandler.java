@@ -71,7 +71,7 @@ public class MsgDealHandler extends SimpleChannelInboundHandler {
                     @Override
                     public void operationComplete(ChannelFuture future) throws Exception {
                         if (future.isSuccess()) {
-                            log.debug("目标服务器连接成功from inter");
+                            log.debug("目标服务器连接成功from inter {}",serverContext);
                             //写
                             //ctx.channel().pipeline().addLast(new Dest2ClientInboundHandler(future.channel()));
                             future.channel().pipeline().addLast(new DataRequestInboundHandler(hubMessage,serverContext));
